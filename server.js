@@ -24,6 +24,12 @@ console.log ('Connected to the mySQL_team database.')
 );
 
 
+//query the database to test the connection
+
+db.query(`SELECT * FROM employees`, (err, rows) => {
+    console.log(err);
+    console.log(rows);
+});
 
 
 
