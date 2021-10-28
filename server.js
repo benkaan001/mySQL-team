@@ -25,12 +25,32 @@ console.log ('Connected to the mySQL_team database.')
 
 
 //query the database to test the connection
-
-db.query(`SELECT * FROM employees`, (err, rows) => {
-    console.log(err);
+//get an employee
+db.query(`SELECT * FROM employees WHERE id=1`, (err, rows) => {
+    if(err) {
+        console.log(err); // should return null if not run sql source 
+    }
     console.log(rows);
 });
 
+//delete an employee
+db.query('DELETE FROM employees WHERE id=?', 1, (err, result) => {
+    if(err){
+        console.log(err);
+    }
+    console.log(result);
+});
+
+//create an employee
+const sql = `INSERT INTO employees (first_name, last_name, role_id, manager_id)
+            VALUES (?,?,?,?)`;
+const params = ['Ben', 'Kaan', 1, null];
+db.query(sql,params,(err,result) => {
+    if(err) {
+        console.log(err);
+    }
+    console.log(result);
+});
 
 
 //test the route
