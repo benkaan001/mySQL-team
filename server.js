@@ -1,5 +1,7 @@
 // import EX to create a connection to the Express.js server to host the application
+const { application } = require('express');
 const express = require('express');
+const { restoreDefaultPrompts } = require('inquirer');
 
 // add the PORT designation and the app expression 
 const PORT = process.env.PORT || 3001;
@@ -24,21 +26,61 @@ console.log ('Connected to the mySQL_team database.')
 );
 
 
-//query the database to test the connection
-//get an employee
-db.query(`SELECT * FROM employees WHERE id=1`, (err, rows) => {
-    if(err) {
-        console.log(err); // should return null if not run sql source 
-    }
-    console.log(rows);
+// //query the database to test the connection
+// //get an employee
+// db.query(`SELECT * FROM employees WHERE id=1`, (err, rows) => {
+//     if(err) {
+//         console.log(err); // should return null if not run sql source 
+//     }
+//     console.log(rows);
+// });
+
+// get a single employee
+
+app.get('/api/employees/:id', (req,res) => {
+    const sql = `SELECT * FROM employees WHERE id=?`;
+    const params = [req.params.id];
+
+    db.query(sql,params, (err,row) => {
+        if(err){
+            res.status(400).json({ error: err.message});
+            return;
+        }
+        res.json({
+            message: 'success',
+            data: row
+        });
+    });
 });
 
+// //delete an employee
+// db.query('DELETE FROM employees WHERE id=?', 1, (err, result) => {
+//     if(err){
+//         console.log(err);
+//     }
+//     console.log(result);
+// });
+
+
 //delete an employee
-db.query('DELETE FROM employees WHERE id=?', 1, (err, result) => {
-    if(err){
-        console.log(err);
-    }
-    console.log(result);
+app.delete('/api/employees/:id', (req,res) =>  {
+    const sql = `DELETE FROM employees WHERE id =?`;
+    const params = [req.params.id];
+    db.query(sql,params, (err,result) => {
+        if(err) {
+            res.status(400).json( { message: res.message});
+        } else if (!result.affectedRows){
+            res.json({
+                message: 'Employee not found'
+            });
+        }else {
+            res.json({
+                message: 'success',
+                changes: result.affectedRows,
+                id: req.params.id
+            });
+        }
+    });
 });
 
 //create an employee
