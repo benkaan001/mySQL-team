@@ -53,11 +53,30 @@ db.query(sql,params,(err,result) => {
 });
 
 
-//test the route
+// //test the route
 
-app.get('/', (req,res) => {
-    res.json({
-        message: 'I am working!!'
+// app.get('/', (req,res) => {
+//     res.json({
+//         message: 'I am working!!'
+//     });
+// });
+
+// get all employees
+app.get('/api/employees', (req,res) => {
+    const sql = `SELECT * FROM employees`;
+
+    db.query(sql, (err,rows) => {
+        if(err) {
+            res.status(500).json( {error: err.message});
+            return;
+        }
+        //instead of logging the result rows from the database
+        //we are sending the message as a JSON object to the browwerser
+        //using <res> in the Express.js route callback
+        res.json({
+            message: 'success',
+            data: rows
+        });
     });
 });
 
