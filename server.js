@@ -1,7 +1,6 @@
 // import EX to create a connection to the Express.js server to host the application
-const { application } = require('express');
 const express = require('express');
-const { restoreDefaultPrompts } = require('inquirer');
+
 
 // add the PORT designation and the app expression 
 const PORT = process.env.PORT || 3001;
