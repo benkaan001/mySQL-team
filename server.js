@@ -205,6 +205,9 @@ const promptUser = (response) => {
             case "Add A Department":
                 addDepartment();
                 break;
+            case "Add A Role":
+                addRole();
+                break;
                 
         }
     })
@@ -270,6 +273,63 @@ addDepartment = () => {
                  })
     })
 };
+
+addRole = () =>{
+    inquirer.prompt([
+        {
+        type:"input",
+        name:"newRoleName",
+        message: "Please enter the name of the new role:",
+        validate: (userInput) => {
+            if(userInput){
+                return true;
+            }else{
+                console.log("Please enter a valid role name!");
+                return false;
+            };
+        },
+        
+    },
+    {
+        type:"number",
+        name:"newRoleSalary",
+        message: "Please enter the salary amount for the new role: ",
+        validate: (userInput) =>{
+            if(isNaN(userInput)){
+                console.log("Please enter a valid numeric value for salary!");
+                return false;
+            }else{
+                return true;
+            };
+        }
+
+    },
+    {
+        type:"number",
+        name:"newRoleDepartmentId",
+        message: "Please enter the department ID for the new role: ",
+        validate: (userInput) =>{
+            if(isNaN(userInput))
+            if(userInput > 5 || userInput < 1) {
+                console.log("Please enter a valid numeric value between 1 and 5 for the Department ID!");
+                return false;
+            }else{
+                return true;
+            }
+        }
+
+    }]).then ( response => {
+        db.query(`INSERT INTO roles (title, salary, department_id) 
+                VALUES (?, ?, ?)`, [response.newRoleName, response.newRoleSalary, response.newRoleDepartmentId], (err,res) => {
+            if(err){
+                console.log(err);
+            } else{
+                console.table(res);
+                promptUser();
+            }
+        })
+    });
+}
 
 promptUser();
 
