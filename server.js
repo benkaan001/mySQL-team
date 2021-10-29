@@ -2,6 +2,8 @@
 // import mysql2 to connect to the MySQL database
 const mysql = require('mysql2');
 
+// mySQL PATH =====> /usr/local/mysql/bin/mysql -uroot -p
+
 const inquirer = require('inquirer');
 const consoleTable = require('console.table');
 
@@ -158,13 +160,16 @@ app.listen(PORT, () => {
     console.log(`Server running on port ${ PORT }`);
 });
 
+
+
+
 //========inquirer prompts =====================
 
 const promptUser = (response) => {
     return inquirer.prompt([
         {
             type: "list",
-            name: "options",
+            name: "userChoice",
             message: "Welcome! Please select one of the options to proceed:",
             choices: [
                 "View All Departments",
@@ -177,7 +182,25 @@ const promptUser = (response) => {
             ]
         }
     ]).then (response => {
-        console.log(response.options);
+        console.log(response.userChoice);
+        // if(response.userChoice === "View All Departments"){
+        //     viewAllDepartments = () => {
+        //         db.query('SELECT*FROM departments', (err, res) => {
+        //             console.table(res);
+        //             promptUser();
+        //         })
+        //     }
+        // }
+
+        switch (response.userChoice){
+            case "View All Departments":
+                viewAllDepartments =() => {
+                    db.query(`SELECT*FROM departments`, (err, res) => {
+                        console.table(res);
+                        promptUser();
+                    })
+                }
+        }
     })
 }
 promptUser();
