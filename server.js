@@ -208,6 +208,9 @@ const promptUser = (response) => {
             case "Add A Role":
                 addRole();
                 break;
+            case "Add An Employee":
+                addEmployee();
+                break;
                 
         }
     })
@@ -329,6 +332,83 @@ addRole = () =>{
             }
         })
     });
+};
+
+addEmployee = () => {
+
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "first",
+            message: "Please enter the new employee's first name:",
+            validate: (userInput) => {
+                if(userInput){
+                    return true;
+                }else{
+                    console.log("Please enter a valid role name!");
+                    return false;
+                };
+            },
+        },
+        {
+            type: "input",
+            name: "last",
+            message: "Please enter the new employee's last name:",
+            validate: (userInput) => {
+                if(userInput){
+                    return true;
+                }else{
+                    console.log("Please enter a valid role name!");
+                    return false;
+                };
+            },
+        },
+        {
+            type:"text",
+            name:"roleId",
+            message: "Please enter the new employee's role ID# : ",
+            validate: (userInput) =>{
+                if(isNaN(userInput)){
+                    console.log("Please enter a valid numeric value between 1 and 5 for the Role ID!");
+                    return false;
+                }
+                else if(userInput > 5 || userInput < 1) {
+                    console.log("Please enter a valid numeric value between 1 and 5 for the Role ID!");
+                    return false;
+                }else{
+                    return true;
+                }
+            }
+        },
+        {
+            type:"text",
+            name:"managerId",
+            message: "Please enter the new employee's manager's ID# : ",
+            validate: (userInput) =>{
+                if(isNaN(userInput)){
+                    console.log("Please enter a valid numeric value between 1 and 5 for the Role ID!");
+                    return false;
+                }
+                else if(userInput > 5 || userInput < 1) {
+                    console.log("Please enter a valid numeric value between 1 and 5 for the Manager ID!");
+                    return false;
+                }else{
+                    return true;
+                }
+            }
+        }        
+       
+    ]).then(response => {
+        db.query(`INSERT INTO employees (first_name, last_name, role_id, manager_id)
+                VALUES (?, ?, ?, ?)`, [response.first, response.last, response.roleId, response.managerId], (err,res) => {
+                    if(err){
+                        console.log(err);
+                    }else {
+                        console.table(res);
+                        promptUser();
+                    }
+                })
+    })
 }
 
 promptUser();
