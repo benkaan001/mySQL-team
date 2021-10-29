@@ -260,14 +260,14 @@ addDepartment = () => {
             }
         } 
     }]).then( response => {
-        db.query(`INSERT INTO departments (name) VALUES (?)`), [response.newDepartment], (err,res) =>{
+        db.query(`INSERT INTO departments (name) VALUES (?)`, [response.newDepartment], (err,res) =>{
                      if (err){
                          console.log(err);
                      }else{
                          console.table(res);
                          promptUser();
                      }
-                 }
+                 })
     })
 };
 
