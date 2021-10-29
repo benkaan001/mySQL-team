@@ -202,6 +202,9 @@ const promptUser = (response) => {
             case "View All Employees":
                 viewAllEmployees();
                 break;
+            case "Add A Department":
+                addDepartment();
+                break;
                 
         }
     })
@@ -212,8 +215,12 @@ const promptUser = (response) => {
 
 viewAllDepartments =() => {
     db.query(`SELECT*FROM departments`, (err, res) => {
+        if(err){
+            console.log(err);
+        }else{
         console.table(res);
         promptUser();
+        }
     });
 };
 
@@ -225,7 +232,7 @@ viewAllRoles =() => {
             console.table(res);
             promptUser();
         }
-    })
+    });
 };
 
 viewAllEmployees =() => {
@@ -236,6 +243,31 @@ viewAllEmployees =() => {
             console.table(res);
             promptUser();
         }
+    });
+};
+
+addDepartment = () => {
+    inquirer.prompt([{
+        type:"input",
+        name:"newDepartment",
+        message: "Please enter the name of the new department:",
+        validate: (userInput) => {
+            if(userInput){
+                return true;
+            }else{
+                console.log("Please enter a new department name!");
+                return false;
+            }
+        } 
+    }]).then( response => {
+        db.query(`INSERT INTO departments (name) VALUES (?)`), [response.newDepartment], (err,res) =>{
+                     if (err){
+                         console.log(err);
+                     }else{
+                         console.table(res);
+                         promptUser();
+                     }
+                 }
     })
 };
 
