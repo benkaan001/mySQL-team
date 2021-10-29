@@ -163,8 +163,22 @@ app.listen(PORT, () => {
 const promptUser = (response) => {
     return inquirer.prompt([
         {
-            
+            type: "list",
+            name: "options",
+            message: "Welcome! Please select one of the options to proceed:",
+            choices: [
+                "View All Departments",
+                "View All Roles",
+                "View All Employees",
+                "Add A Department",
+                "Add A Role",
+                "Add An Employee", 
+                "Update An Employee Role"
+            ]
         }
-    ])
+    ]).then (response => {
+        console.log(response.options);
+    })
 }
+promptUser();
 
