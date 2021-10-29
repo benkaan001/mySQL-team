@@ -421,38 +421,34 @@ updateEmployee = () => {
             name: "updateEmployee",
             message: "Please select the employee you would like to make changes to: ",
             choices : [
-                ('Captain'),
-                ('Veda'),
-                ('Bilkem'),
-                ('Matt'),
-                ('Sue'),
-                ('Sara'),
-                ('Manuel'),
-                ('Zackery'),
-                ('Isabel'),
-                ('Noe')
+                'Captain',
+                'Veda',
+                'Bilkem',
+                'Matt',
+                'Sue',
+                'Sara',
+                'Manuel',
+                'Zackery',
+                'Isabel',
+                'Noe'
             ]
             
         },
         {
             type:'list',
             name: "newRole",
-            message: "Please select the new role: ",
-            choices: [
-                ('Super Hero'),
-                ('Sales Associate'),
-                ('IT Director'),
-                ('IT Engineer'),
-                ('Finance Director'),
-                ('Finance Associate'),
-                ('HR Director'),
-                ('HR Associate')
-            ]
+            message: "Please select the department id for the new role: \n\
+             [1] for Super Hero \n\
+             [2] for Sales Associate \n\
+             [3] for IT \n\
+             [4] for Finance \n\
+             [5] for HR",
+            choices: [1,2,3,4,5]
 
         }
     ]).then(response => {
-        db.query(`UPDATE employees SET roles_title = ? WHERE first_name = ? `,
-                 [response.newRole, response.updateEmployee], (err, res) => {
+        db.query(`UPDATE employees SET role_id = ? WHERE first_name = ? `,
+                 [response.newRoleId, response.updateEmployee], (err, res) => {
                      if(err){
                          console.log(err);
                      } else {
