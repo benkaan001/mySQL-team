@@ -211,6 +211,9 @@ const promptUser = (response) => {
             case "Add An Employee":
                 addEmployee();
                 break;
+            case "Update An Employee Role":
+                updateEmployee();
+                break;
                 
         }
     })
@@ -409,6 +412,56 @@ addEmployee = () => {
                     }
                 })
     })
+};
+
+updateEmployee = () => {
+    inquirer.prompt([
+        {
+            type: "list",
+            name: "updateEmployee",
+            message: "Please select the employee you would like to make changes to: ",
+            choices : [
+                ('Captain'),
+                ('Veda'),
+                ('Bilkem'),
+                ('Matt'),
+                ('Sue'),
+                ('Sara'),
+                ('Manuel'),
+                ('Zackery'),
+                ('Isabel'),
+                ('Noe')
+            ]
+            
+        },
+        {
+            type:'list',
+            name: "newRole",
+            message: "Please select the new role: ",
+            choices: [
+                ('Super Hero'),
+                ('Sales Associate'),
+                ('IT Director'),
+                ('IT Engineer'),
+                ('Finance Director'),
+                ('Finance Associate'),
+                ('HR Director'),
+                ('HR Associate')
+            ]
+
+        }
+    ]).then(response => {
+        db.query(`UPDATE employees SET roles_title = ? WHERE first_name = ? `,
+                 [response.newRole, response.updateEmployee], (err, res) => {
+                     if(err){
+                         console.log(err);
+                     } else {
+                         console.table(res);
+                         promptUser();
+                     }
+                 })
+    })
+
 }
 
 promptUser();
