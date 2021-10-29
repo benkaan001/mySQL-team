@@ -194,14 +194,52 @@ const promptUser = (response) => {
 
         switch (response.userChoice){
             case "View All Departments":
-                viewAllDepartments =() => {
-                    db.query(`SELECT*FROM departments`, (err, res) => {
-                        console.table(res);
-                        promptUser();
-                    })
-                }
+                viewAllDepartments();
+                break;
+            case "View All Roles":
+                viewAllRoles();
+                break;
+            case "View All Employees":
+                viewAllEmployees();
+                break;
+                
         }
     })
 }
+
+
+//===== Prompt Functions ====//
+
+viewAllDepartments =() => {
+    db.query(`SELECT*FROM departments`, (err, res) => {
+        console.table(res);
+        promptUser();
+    });
+};
+
+viewAllRoles =() => {
+    db.query(`SELECT*FROM roles`, (err,res) => {
+        if(err){
+            console.log(err);
+        }else{
+            console.table(res);
+            promptUser();
+        }
+    })
+};
+
+viewAllEmployees =() => {
+    db.query(`SELECT*FROM employees`, (err,res) => {
+        if(err){
+            console.log(err);
+        }else{
+            console.table(res);
+            promptUser();
+        }
+    })
+};
+
 promptUser();
+
+
 
