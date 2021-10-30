@@ -179,7 +179,9 @@ const promptUser = (response) => {
                 "Add A Role",
                 "Add An Employee", 
                 "Update An Employee Role",
-                "View Employees By Manager"
+                "View Employees By Manager",
+                "View Employees By Department",
+                "Quit Application"
             ]
         }
     ]).then (response => {
@@ -218,6 +220,20 @@ const promptUser = (response) => {
             case "View Employees By Manager":
                 viewEmployeesByManager();
                 break;
+            case "View Employees By Department":
+                viewEmployeesByDepartment();
+                break;
+            case "Quit Application":
+                db.end((err) => {
+                    if(err){
+                        console.log('error: ' + err.message);
+                    } else{
+                        console.log ('Thank you for visiting mySQL_team!\n\Have a great day!');
+                        process.exit();
+                    }
+                });
+               
+            
                 
         }
     })
@@ -479,6 +495,32 @@ viewEmployeesByManager = () => {
     ]).then (response => {
         db.query(`SELECT * FROM employees WHERE manager_id = ?`, [response.managerId], (err,res) =>{
             if (err){
+                console.log(err);
+            }else{
+                console.table(res);
+                promptUser();
+            }
+        })
+    })
+};
+
+viewEmployeesByDepartment = () => {
+    inquirer.prompt([
+        {
+            type: "checkbox",
+            name:"departmentId",
+            message:"Please select the department ID: \n\
+            [1] Super Hero \n\
+            [2] Sales \n\
+            [3] IT\n\
+            [4] Finance\n\
+            [5] HR ",
+            choices:[1,2,3,4,5]
+        }
+    ]).then(response => {
+        db.query(`SELECT * FROM employees, roles WHERE employees.role_id = roles.department_id = ?`,
+                [response.departmentId], (err, res) => {
+            if(err){
                 console.log(err);
             }else{
                 console.table(res);
