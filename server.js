@@ -178,7 +178,8 @@ const promptUser = (response) => {
                 "Add A Department",
                 "Add A Role",
                 "Add An Employee", 
-                "Update An Employee Role"
+                "Update An Employee Role",
+                "View Employees By Manager"
             ]
         }
     ]).then (response => {
@@ -213,6 +214,9 @@ const promptUser = (response) => {
                 break;
             case "Update An Employee Role":
                 updateEmployee();
+                break;
+            case "View Employees By Manager":
+                viewEmployeesByManager();
                 break;
                 
         }
@@ -438,11 +442,11 @@ updateEmployee = () => {
             type:'list',
             name: "newRole",
             message: "Please select the department id for the new role: \n\
-             [1] for Super Hero \n\
-             [2] for Sales Associate \n\
-             [3] for IT \n\
-             [4] for Finance \n\
-             [5] for HR",
+             [1] Super Hero \n\
+             [2] Sales Associate \n\
+             [3] IT \n\
+             [4] Finance \n\
+             [5] HR",
             choices: [1,2,3,4,5]
 
         }
@@ -458,6 +462,30 @@ updateEmployee = () => {
                  })
     })
 
+};
+
+viewEmployeesByManager = () => {
+    inquirer.prompt([
+        {
+            type:"list",
+            name:"managerId",
+            message: "Please select the manager ID: \n\
+            [1] Captain America @ Super Hero \n\
+            [3] Matt Huynh @ IT \n\
+            [4] Sue Liu @ Finance\n\
+            [5] Sara Al @ HR ",
+            choices:[1,3,4,5]
+        }
+    ]).then (response => {
+        db.query(`SELECT * FROM employees WHERE manager_id = ?`, [response.managerId], (err,res) =>{
+            if (err){
+                console.log(err);
+            }else{
+                console.table(res);
+                promptUser();
+            }
+        })
+    })
 }
 
 promptUser();
