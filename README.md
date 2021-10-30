@@ -38,13 +38,15 @@
 
   ## Installation
 
-  This application requires Node.js package installation.
+  This application requires <Node.js> package installation.
+
 
   Use the following url to clone the repository:
 
   `< git clone https://github.com/benkaan001/mySQL-team>`
+  
 
-  Run the following command on your terminal to install the dependency node package libraries;
+  Run the following command on your terminal to install the dependency node package libraries:
 
   `< npm i express --save inquirer console.table mysql2 >`
 
@@ -52,17 +54,29 @@
   ## Usage
 
   To connect to the mySQL database, please run the following command on your terminal:
+
   `<mysql -u root -p>`
+
+
   To populate the database, then, run:
+
   `<source db/schema.sql>`
+
   `<source db/seeds.sql>`
+
+
   To exit mySQL, run: 
+
   `<exit>`
 
+
   Please run the following command on your terminal to initate the server:
+
   `<node server.js>`
 
+
   To exit the application, choose the user prompt menu option 
+
   `<quit>`
 
 
