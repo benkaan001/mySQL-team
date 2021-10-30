@@ -15,7 +15,7 @@
 
   ## Description
   
-  The purpose of this project is to build 
+  The purpose of this project is to build a command-line application that functions as a Content Management System(CSM) to manage a simple employee database using Node.js, Inquirer, and MySQL.
 
 
 
@@ -44,7 +44,7 @@
   Use the following url to clone the repository:
 
   `< git clone https://github.com/benkaan001/mySQL-team>`
-  
+
 
   Run the following command on your terminal to install the dependency node package libraries:
 
@@ -53,7 +53,7 @@
 
   ## Usage
 
-  To connect to the mySQL database, please run the following command on your terminal:
+  To connect to the mySQL database, please run the following command on your terminal after updating the user credentials at the top of <server.js> file:
 
   `<mysql -u root -p>`
 

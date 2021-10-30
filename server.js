@@ -60,12 +60,13 @@ const promptUser = (response) => {
           "Update An Employee Role",
           "View Employees By Manager",
           "View Employees By Department",
+          "Delete A Department",
           "Quit",
         ],
       },
     ])
     .then((response) => {
-      console.log(response.userChoice);
+      //   console.log(response.userChoice);
 
       switch (response.userChoice) {
         case "View All Departments":
@@ -94,6 +95,9 @@ const promptUser = (response) => {
           break;
         case "View Employees By Department":
           viewEmployeesByDepartment();
+          break;
+        case "Delete A Department":
+          deleteDepartment();
           break;
         case "Quit":
           db.end((err) => {
@@ -354,15 +358,15 @@ updateEmployee = () => {
         ],
       },
       {
-        type: "checkbox",
+        type: "list",
         name: "newRole",
         message:
           "Please select the department id for the new role: \n\
-             [1] Super Hero \n\
-             [2] Sales Associate \n\
-             [3] IT \n\
-             [4] Finance \n\
-             [5] HR",
+        [1] Super Hero \n\
+        [2] Sales Associate \n\
+        [3] IT \n\
+        [4] Finance \n\
+        [5] HR",
         choices: [1, 2, 3, 4, 5],
       },
     ])
@@ -386,7 +390,7 @@ viewEmployeesByManager = () => {
   inquirer
     .prompt([
       {
-        type: "checkbox",
+        type: "list",
         name: "managerId",
         message:
           "Please select the manager ID: \n\
@@ -417,7 +421,7 @@ viewEmployeesByDepartment = () => {
   inquirer
     .prompt([
       {
-        type: "checkbox",
+        type: "list",
         name: "departmentId",
         message:
           "Please select the department ID: \n\
@@ -438,6 +442,39 @@ viewEmployeesByDepartment = () => {
             console.log(err);
           } else {
             console.table(res);
+            promptUser();
+          }
+        }
+      );
+    });
+};
+
+deleteDepartment = () => {
+  inquirer
+    .prompt([
+      {
+        type: "list",
+        name: "department",
+        message: "Please select the department you would like to remove: ",
+        choices: [
+          "Fun-to-see",
+          "Sales",
+          "Technology",
+          "Finance",
+          "Human Resources",
+        ],
+      },
+    ])
+    .then((response) => {
+      db.query(
+        `DELETE FROM departments WHERE name = ?`,
+        [response.department],
+        (err, res) => {
+          if (err) {
+            console.log(err);
+          } else {
+            console.table(res);
+            viewAllDepartments();
             promptUser();
           }
         }
