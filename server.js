@@ -235,7 +235,7 @@ addRole = () => {
         [
           response.newRoleName,
           response.newRoleSalary,
-          response.newRoleDepartmentId,
+          response.newRoleDepartmentId
         ],
         (err, res) => {
           if (err) {

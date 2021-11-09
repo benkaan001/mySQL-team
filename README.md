@@ -89,7 +89,7 @@
 
   ![demo gif](https://github.com/benkaan001/mySQL-team/blob/main/assets/mySQLteam.gif)
   
-  Check out the deployed application on -[screencastify](https://watch.screencastify.com/v/jP1u3Cr6jNmtnH5xbCuA)
+  Check out the deployed application on -[screencastify](https://watch.screencastify.com/v/rtjRBEWEvXLBFxGu8GAN)
  
 
 
