@@ -15,7 +15,7 @@
 
   ## Description
   
-  The purpose of this project is to build a command-line application that functions as a Content Management System(CSM) to manage a simple employee database using Node.js, Inquirer, and MySQL.
+  The purpose of this project is to build a command-line application that functions as a Content Management System(CMS) to manage a simple employee database using Node.js, Inquirer, and MySQL.
 
 
 
@@ -53,7 +53,7 @@
 
   ## Usage
 
-  To connect to the mySQL database, please run the following command on your terminal after updating the user credentials at the top of <server.js> file:
+  To connect to the mySQL database, run the following command on your terminal after updating the user credentials at the top of <server.js> file:
 
   `<mysql -u root -p>`
 
@@ -70,7 +70,7 @@
   `<exit>`
 
 
-  Please run the following command on your terminal to initate the server:
+  Run the following command on your terminal to initate the server:
 
   `<node server.js>`
 
